@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { siteConfig, generateDailyProjects, type Project } from './config/site'
+import { generateDailyProjects, type Project } from './config/site'
 import './index.css'
 
 function App() {
   const dailyData = generateDailyProjects()
   const [selectedDate, setSelectedDate] = useState(dailyData[0].date)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null)
   
   const currentDayData = dailyData.find(d => d.date === selectedDate) || dailyData[0]
 
@@ -50,38 +51,128 @@ function App() {
 
   return (
     <div className="app">
-      {/* 导航栏 */}
+      {/* ============ NAVBAR ============ */}
       <nav className="navbar">
-        <a href="#" className="navbar-brand">
-          <span className="navbar-logo">🦐</span>
-          <span className="navbar-title">AI项目百科</span>
-        </a>
-        <div className="navbar-links">
-          <a href="#projects" className="navbar-link active">今日推荐</a>
-          <a href="#archive" className="navbar-link">往期归档</a>
+        <div className="navbar-inner">
+          <a href="#" className="navbar-brand">🍎</a>
+          
+          <ul className="navbar-links"
+              onMouseLeave={() => setHoveredNav(null)}
+          >
+            {[
+              { id: 'store', label: '选购', dropdown: ['Mac', 'iPad', 'iPhone', 'Watch', 'AirPods', '配件'] },
+              { id: 'mac', label: 'Mac', dropdown: ['MacBook Air', 'MacBook Pro', 'iMac', 'Mac mini', 'Mac Studio'] },
+              { id: 'ipad', label: 'iPad', dropdown: ['iPad Pro', 'iPad Air', 'iPad mini', 'iPad'] },
+              { id: 'iphone', label: 'iPhone', dropdown: ['iPhone 15 Pro', 'iPhone 15', 'iPhone 14', '比较'] },
+              { id: 'watch', label: 'Watch', dropdown: ['Apple Watch', 'Apple Watch Ultra', 'Apple Watch SE'] },
+              { id: 'vision', label: 'Vision Pro', dropdown: ['Apple Vision Pro'] },
+              { id: 'airpods', label: 'AirPods', dropdown: ['AirPods Pro', 'AirPods', 'AirPods Max'] },
+              { id: 'tv', label: '电视', dropdown: ['Apple TV 4K', 'HomePod'] },
+              { id: 'entertainment', label: '娱乐', dropdown: ['Apple One', 'Apple TV+', 'Music', 'Arcade'] },
+              { id: 'accessories', label: '配件' },
+              { id: 'support', label: '技术支持' },
+            ].map(item => (
+              <li key={item.id}
+                  onMouseEnter={() => item.dropdown && setHoveredNav(item.id)}
+              >
+                <a href="#" className={hoveredNav === item.id ? 'active' : ''}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="navbar-actions">
+            <button className="navbar-action-btn">🔍</button>
+            <button className="navbar-action-btn">🛒</button>
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* ============ SECONDARY NAVBAR ============ */}
+      <div className="subnav">
+        <div className="subnav-inner">
+          {[
+            { icon: '🦐', label: 'AI项目百科' },
+            { icon: '🔥', label: '今日热门' },
+            { icon: '📅', label: '往期归档' },
+            { icon:'📚', label: '教程' },
+            { icon: '💡', label: '新手入门' },
+          ].map((item, i) => (
+            <a key={i} href="#" className="subnav-item">
+              <span className="subnav-icon">{item.icon}</span>
+              <span className="subnav-label">{item.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ============ HERO ============ */}
       <section className="hero">
         <div className="hero-badge">
-          <span className="hero-badge-icon">🔥</span>
-          {siteConfig.hero.badge}
+          🦐 AI项目百科
         </div>
-        <h1 className="hero-title">
-          每天
-          <span className="highlight">10个</span>
-          最火的AI项目
-        </h1>
-        <p className="hero-subtitle">{siteConfig.hero.subtitle}</p>
-        <a href="#projects" className="hero-cta">
-          {siteConfig.hero.cta.text}
-        </a>
+        <h1 className="hero-title">每天10个最火的AI项目</h1>
+        <p className="hero-subtitle">用最通俗的语言讲解，手把手教你做出来</p>
+        <div className="hero-cta-group">
+          <a href="#projects" className="hero-cta">
+            探索今日项目 <span className="hero-cta-arrow">→</span>
+          </a>
+          <a href="#archive" className="hero-cta">
+            浏览往期 <span className="hero-cta-arrow">→</span>
+          </a>
+        </div>
       </section>
 
-      {/* 归档导航 */}
-      <section className="archive-nav" id="archive">
-        <div className="archive-nav-title">选择日期</div>
+      {/* ============ PRODUCTS SECTION ============ */}
+      <section className="products-section">
+        <div className="section-header">
+          <p className="section-eyebrow">为你推荐</p>
+          <h2 className="section-title">热门AI项目</h2>
+          <p className="section-subtitle">来自GitHub Trending，每日更新</p>
+        </div>
+        
+        <div className="products-grid">
+          <div className="product-card new">
+            <div className="product-icon">🤖</div>
+            <h3 className="product-name">ChatTutor</h3>
+            <p className="product-tagline">用自然语言教你编程的AI导师</p>
+            <p className="product-price">⭐12.8k</p>
+            <span className="product-cta">了解更多 →</span>
+          </div>
+          
+          <div className="product-card">
+            <div className="product-icon">🎨</div>
+            <h3 className="product-name">ImageGenius</h3>
+            <p className="product-tagline">用文字生成图片的AI工具</p>
+            <p className="product-price">⭐ 45.0k</p>
+            <span className="product-cta">了解更多 →</span>
+          </div>
+          
+          <div className="product-card">
+            <div className="product-icon">🎵</div>
+            <h3 className="product-name">VoiceBot</h3>
+            <p className="product-tagline">让电脑开口说话的AI</p>
+            <p className="product-price">⭐ 8.9k</p>
+            <span className="product-cta">了解更多 →</span>
+          </div>
+          
+          <div className="product-card 更新">
+            <div className="product-icon">💻</div>
+            <h3 className="product-name">CodePilot</h3>
+            <p className="product-tagline">你的AI编程助手</p>
+            <p className="product-price">⭐ 89.0k</p>
+            <span className="product-cta">了解更多 →</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ ARCHIVE SECTION ============ */}
+      <section className="archive-section" id="archive">
+        <div className="archive-header">
+          <h2 className="archive-header-title">选择日期</h2>
+        </div>
+        
         <div className="date-tabs">
           {dailyData.map((day) => (
             <button
@@ -96,12 +187,10 @@ function App() {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section className="projects" id="projects">
+      {/* ============ PROJECTS SECTION ============ */}
+      <section className="projects-section" id="projects">
         <div className="section-header">
-          <div className="section-badge">
-            {currentDayData.dateLabel} · AI项目精选
-          </div>
+          <p className="section-eyebrow">{currentDayData.dateLabel} · AI项目精选</p>
           <h2 className="section-title">🔥 今日推荐</h2>
           <p className="section-subtitle">点击卡片查看通俗讲解和手把手教程</p>
         </div>
@@ -113,41 +202,60 @@ function App() {
               className="project-card"
               onClick={() => openModal(project)}
             >
-              <div className="project-header">
-                <div className="project-rank">{project.id <= 10 ? project.id : project.id % 10}</div>
-                <div className="project-info">
-                  <h3 className="project-name">{project.name}</h3>
-                  <p className="project-author">by {project.author}</p>
-                </div>
-              </div>
+              <div className="project-rank">{project.id <= 10 ? project.id : project.id % 10}</div>
+              <h3 className="project-name">{project.name}</h3>
+              <p className="project-author">by {project.author}</p>
               <p className="project-desc">{project.description}</p>
               <div className="project-meta">
                 <div className="meta-item">
                   <span>⭐</span>
                   <span className="stars">{formatStars(project.stars)}</span>
                 </div>
-                <div className="meta-item">
-                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: project.color, display: 'inline-block' }}></span>
-                  {project.language}
-                </div>
+                <div className="meta-item">{project.language}</div>
                 <span className="difficulty-badge">{project.difficulty}</span>
-                <span className="time-badge">
-                  <span>⏱️</span>
-                  {project.estimatedTime}
-                </span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ============ FOOTER ============ */}
       <footer className="footer">
-        <p className="footer-desc">{siteConfig.footer.description}</p>
-        <p className="footer-copyright">© {siteConfig.footer.copyright}</p>
+        <div className="footer-content">
+          <div className="footer-links">
+            <div className="footer-column">
+              <h4 className="footer-column-title">功能</h4>
+              <ul className="footer-column-links">
+                <li><a href="#">今日推荐</a></li>
+                <li><a href="#">往期归档</a></li>
+                <li><a href="#">新手入门</a></li>
+                <li><a href="#">教程</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4 className="footer-column-title">资源</h4>
+              <ul className="footer-column-links">
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">文档</a></li>
+                <li><a href="#">API</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4 className="footer-column-title">关于</h4>
+              <ul className="footer-column-links">
+                <li><a href="#">关于我们</a></li>
+                <li><a href="#">联系我们</a></li>
+             </ul>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p className="footer-copyright">用爱发电，让每个人都能玩转AI项目</p>
+            <p className="footer-legal">© 2024 AI项目百科 ·隐私政策 · 使用条款</p>
+          </div>
+        </div>
       </footer>
 
-      {/* Detail Modal */}
+      {/* ============ MODAL ============ */}
       <div className={`modal-overlay ${selectedProject ? 'active' : ''}`} onClick={handleOverlayClick}>
         <div className="modal">
           {selectedProject && (
@@ -157,7 +265,7 @@ function App() {
                   <h2 className="modal-title">{selectedProject.name}</h2>
                   <div className="modal-meta">
                     <span className="difficulty-badge">{selectedProject.difficulty}</span>
-                    <span className="time-badge">⏱️ {selectedProject.estimatedTime}</span>
+                    <span className="meta-item">⏱️ {selectedProject.estimatedTime}</span>
                     <span className="meta-item"><span>⭐</span><span className="stars">{formatStars(selectedProject.stars)}</span></span>
                   </div>
                 </div>
@@ -177,10 +285,10 @@ function App() {
               </div>
 
               <div className="modal-footer">
-                <a href={`https://github.com/${selectedProject.fullName}`} target="_blank" rel="noopener noreferrer" className="hero-cta">
+                <a href={`https://github.com/${selectedProject.fullName}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                   在GitHub查看
                 </a>
-                <button className="hero-cta" onClick={closeModal} style={{ background: 'var(--bg-hover)', border: '1px solid var(--border)' }}>
+                <button className="btn btn-secondary" onClick={closeModal}>
                   关闭
                 </button>
               </div>
