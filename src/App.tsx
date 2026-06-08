@@ -52,10 +52,10 @@ function App() {
     <div className="app">
       {/* 导航栏 */}
       <nav className="navbar">
-        <div className="navbar-brand">
+        <a href="#" className="navbar-brand">
           <span className="navbar-logo">🦐</span>
           <span className="navbar-title">AI项目百科</span>
-        </div>
+        </a>
         <div className="navbar-links">
           <a href="#projects" className="navbar-link active">今日推荐</a>
           <a href="#archive" className="navbar-link">往期归档</a>
@@ -64,38 +64,24 @@ function App() {
 
       {/* Hero Section */}
       <section className="hero">
-        <div className="badge">
-          <span>🔥</span>
+        <div className="hero-badge">
+          <span className="hero-badge-icon">🔥</span>
           {siteConfig.hero.badge}
         </div>
         <h1 className="hero-title">
-          {siteConfig.hero.title.split('10个')[0]}
+          每天
           <span className="highlight">10个</span>
-          {siteConfig.hero.title.split('10个')[1]}
+          最火的AI项目
         </h1>
         <p className="hero-subtitle">{siteConfig.hero.subtitle}</p>
         <a href="#projects" className="hero-cta">
           {siteConfig.hero.cta.text}
-          <span>↓</span>
         </a>
-      </section>
-
-      {/* Features Section */}
-      <section className="features">
-        <div className="features-grid">
-          {siteConfig.features.map((feature, index) => (
-            <div className="feature-card" key={index}>
-              <div className="feature-icon">{feature.icon}</div>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-desc">{feature.description}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* 归档导航 */}
       <section className="archive-nav" id="archive">
-        <div className="archive-nav-title">📅 往期归档</div>
+        <div className="archive-nav-title">选择日期</div>
         <div className="date-tabs">
           {dailyData.map((day) => (
             <button
@@ -114,10 +100,9 @@ function App() {
       <section className="projects" id="projects">
         <div className="section-header">
           <div className="section-badge">
-            <span>📅</span>
             {currentDayData.dateLabel} · AI项目精选
           </div>
-          <h2 className="section-title">🔥今日推荐的AI项目</h2>
+          <h2 className="section-title">🔥 今日推荐</h2>
           <p className="section-subtitle">点击卡片查看通俗讲解和手把手教程</p>
         </div>
 
@@ -142,7 +127,7 @@ function App() {
                   <span className="stars">{formatStars(project.stars)}</span>
                 </div>
                 <div className="meta-item">
-                  <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: project.color, display: 'inline-block' }}></span>
+                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: project.color, display: 'inline-block' }}></span>
                   {project.language}
                 </div>
                 <span className="difficulty-badge">{project.difficulty}</span>
@@ -181,22 +166,22 @@ function App() {
               
               <div className="modal-body">
                 <div className="section-block">
-                  <h3 className="section-block-title"><span>📚</span>通俗讲解</h3>
+                  <h3 className="section-block-title">📚 通俗讲解</h3>
                   <div className="section-block-content">{selectedProject.通俗讲解}</div>
                 </div>
 
                 <div className="section-block">
-                  <h3 className="section-block-title"><span>🎓</span>小学生都能懂的手把手教程</h3>
+                  <h3 className="section-block-title">🎓 手把手教程</h3>
                   <div className="section-block-content">{renderTutorial(selectedProject.tutorial)}</div>
                 </div>
               </div>
 
               <div className="modal-footer">
-                <a href={`https://github.com/${selectedProject.fullName}`} target="_blank" rel="noopener noreferrer" className="hero-cta" style={{ fontSize: '16px', padding: '12px 24px' }}>
-                 <span>🔗</span>查看原项目
+                <a href={`https://github.com/${selectedProject.fullName}`} target="_blank" rel="noopener noreferrer" className="hero-cta">
+                  在GitHub查看
                 </a>
-                <button className="hero-cta" onClick={closeModal} style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', fontSize: '16px', padding: '12px 24px' }}>
-                  返回列表
+                <button className="hero-cta" onClick={closeModal} style={{ background: 'var(--bg-hover)', border: '1px solid var(--border)' }}>
+                  关闭
                 </button>
               </div>
             </>
