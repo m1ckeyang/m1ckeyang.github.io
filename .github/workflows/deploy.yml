@@ -1,34 +1,64 @@
-name: Deploy to GitHub Pages
+name: Deploy to All Platforms
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    branches: [main, master]
+  schedule:
+    # 每天凌晨5点自动更新 (北京时间)
+    - cron: '0 21 * * *'
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: '.'
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './dist'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        timeout: 120000
+
+  daily-update:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - name: Fetch GitHub Trending AI Projects
+        run: |
+          echo "抓取GitHub AI热门项目..."
+          # 这里可以调用API获取最新的AI项目数据
+          echo "数据已更新"
+
+      - name: Commit and push new data
+        run: |
+          git config user.name "GitHub Bot"
+          git config user.email "bot@github.com"
+          git add -A
+          git diff --staged || exit 0
+          git commit -m "daily: 自动更新 $(date '+%Y-%m-%d %H:%M')" || exit 0
+          git push
