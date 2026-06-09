@@ -19,7 +19,7 @@ export const siteConfig = {
   
   footer: {
     description: "用爱发电，让每个人都能玩转AI项目",
-    copyright: "2024 AI项目百科",
+    copyright: "2026 AI项目百科",
   }
 }
 
@@ -57,14 +57,14 @@ const generateDates = () => {
   return dates
 }
 
-// 2026年6月9日 GitHub Trending 热门AI项目（数据来源：GitHub Trending 每日榜单）
+// 2026年6月9日 GitHub Trending 热门AI项目（数据来源：GitHub Trending 每日榜单，更新于 16:17 CST）
 const trendingProjects: Project[] = [
   {
     id: 1,
     name: "career-ops",
     fullName: "santifer/career-ops",
     description: "基于 Claude Code 的 AI 求职系统，14种技能模式，Go 仪表盘，PDF 生成和批量处理",
-    stars: 50404,
+    stars: 50904,
     language: "JavaScript",
     color: "#F8DB5C",
     author: "santifer",
@@ -78,7 +78,7 @@ const trendingProjects: Project[] = [
     name: "supervision",
     fullName: "roboflow/supervision",
     description: "可复用的计算机视觉工具库，帮助开发者构建视觉AI应用",
-    stars: 42286,
+    stars: 42560,
     language: "Python",
     color: "#3572A5",
     author: "Roboflow",
@@ -92,7 +92,7 @@ const trendingProjects: Project[] = [
     name: "last30days-skill",
     fullName: "mvanhorn/last30days-skill",
     description: "AI Agent 技能，能从 Reddit、X、YouTube、HN、Polymarket 等平台研究任何话题并生成总结",
-    stars: 34204,
+    stars: 35633,
     language: "Python",
     color: "#3572A5",
     author: "mvanhorn",
@@ -106,7 +106,7 @@ const trendingProjects: Project[] = [
     name: "CopilotKit",
     fullName: "CopilotKit/CopilotKit",
     description: "为 AI Agent 和生成式 UI 打造的前端框架，支持 React、Angular、移动端等",
-    stars: 34076,
+    stars: 34327,
     language: "TypeScript",
     color: "#3178C6",
     author: "CopilotKit",
@@ -120,7 +120,7 @@ const trendingProjects: Project[] = [
     name: "Personal_AI_Infrastructure",
     fullName: "danielmiessler/Personal_AI_Infrastructure",
     description: "Agentic AI 基础设施，增强人类能力的 AI Agent 系统",
-    stars: 15374,
+    stars: 15589,
     language: "TypeScript",
     color: "#3178C6",
     author: "danielmiessler",
@@ -134,7 +134,7 @@ const trendingProjects: Project[] = [
     name: "tolaria",
     fullName: "refactoringhq/tolaria",
     description: "桌面应用，用于管理 Markdown 知识库，打造你的第二大脑",
-    stars: 13492,
+    stars: 13884,
     language: "TypeScript",
     color: "#3178C6",
     author: "refactoringhq",
@@ -148,7 +148,7 @@ const trendingProjects: Project[] = [
     name: "skills",
     fullName: "google/skills",
     description: "Google 官方推出的 Agent 技能集，集成各种 Google 产品和技术的 AI 技能",
-    stars: 12321,
+    stars: 12702,
     language: "Python",
     color: "#4285F4",
     author: "Google",
@@ -162,7 +162,7 @@ const trendingProjects: Project[] = [
     name: "turbovec",
     fullName: "RyanCodrai/turbovec",
     description: "基于 TurboQuant 的向量索引，用 Rust 编写并带有 Python 绑定，极速向量搜索",
-    stars: 8654,
+    stars: 9479,
     language: "Python",
     color: "#DEA584",
     author: "RyanCodrai",
@@ -190,7 +190,7 @@ const trendingProjects: Project[] = [
     name: "whichllm",
     fullName: "Andyyyy64/whichllm",
     description: "找到最适合你本地硬件的 LLM，基于真实基准测试结果排名，不看参数看性能",
-    stars: 3383,
+    stars: 3693,
     language: "Python",
     color: "#3572A5",
     author: "Andyyyy64",
